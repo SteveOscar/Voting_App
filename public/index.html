@@ -1,27 +1,41 @@
 <!doctype html>
 <html>
   <head>
-    <title>Ask the Audience</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css'>
+    <title>CrowdSource</title>
   </head>
   <body>
-    <div id="connection-count"></div>
-    <div id="status-message"></div>
+    <h1 class="center">CrowdSource</h1>
 
-    <div id="choices">
-      <button>A</button>
-      <button>B</button>
-      <button>C</button>
-      <button>D</button>
+    <div class="container">
+      <h3 class="center">Create New Poll</h3><br>
+      <form id="form">
+        <div class="container">
+          <label><h5>Please enter poll name.</h5></label><br>
+          <input type="text" name="title"><br><br>
+
+          <label><h5>Please choose a poll password or enter your existing password <br>if you are a returning user.</h5></label><br>
+          <input type="text" name="adminId"><br><br>
+
+          <label><h5>Enter up to four options.</h5></label><br>
+          <input type="text" name="options1"><br>
+          <input type="text" name="options2"><br>
+          <input type="text" name="options3"><br>
+          <input type="text" name="options4"><br><br>
+
+          <label><h5>Please enter amount of time (in minutes) for poll to remain open.</h5></label>
+          <input type="text" name="runtime" value="N/A"><br><br>
+          <input id="submit" type="button" class="btn btn-default">Create Poll</input>
+        </div>
+      </form>
+      <a href="../new-page.htm">follow this link</a>
     </div>
 
-    <div id="A"></div>
-    <div id="B"></div>
-    <div id="C"></div>
-    <div id="D"></div>
+    <div id="connection-count"></div>
 
-    <div id="vote-confirmation"></div>
-
+    <br><br><br>
     <!-- Make sure your JS is at the bottom of the body! -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/client.js"></script>
   </body>

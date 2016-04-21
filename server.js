@@ -1,15 +1,29 @@
 // server.js
 const http = require('http');
 const express = require('express');
-
+const path = require('path');
 const app = express();
 var votes = {};
 
 app.use(express.static('public'));
 
-app.get('/', function (req, res){
-  res.sendFile(__dirname + '/public/index.html');
+app.set('view engine', 'jade');
+app.locals.polls = {}
+app.get('/', (request, response) => {
+  response.sendFile(path.join(__dirname, '/static/index.html'));
+  // response.render('welcome');
 });
+
+app.get('/welcome', (request, response) => {
+  response.sendFile(path.join(__dirname, '/static/index.html'));
+  // response.render('welcome');
+});
+
+app.get('/polls/:id/:adminId', function(req, res){
+  console.log('IN REDIRECT!')
+  var poll = app.locals.polls[req.params.id];
+  res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
+})
 
 const port = process.env.PORT || 3000;
 
@@ -40,6 +54,10 @@ io.on('connection', function (socket) {
       votes[socket.id] = message;
       socket.emit('voteReceived', message);
       io.sockets.emit('tally', countVotes(votes));
+    }
+    if (channel === 'createPoll') {
+      app.locals.polls[message["adminId"]] = message;
+
     }
   });
 });
