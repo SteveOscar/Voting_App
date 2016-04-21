@@ -3,19 +3,20 @@ var socket = io();
 var connectionCount = document.getElementById('connection-count');
 var statusMessage = document.getElementById('status-message');
 var confirmation = document.getElementById('vote-confirmation');
-var submit = document.getElementById('submit')
-var form = document.getElementById('form')
+var submitPoll = document.getElementById('submitPoll');
+var form = document.getElementById('form');
 
-submit.addEventListener('click', function () {
+submitPoll.addEventListener('click', function () {
   var poll = $('#form :input');
   var values = {};
-  var id = 2
   poll.each(function() {
       values[this.name] = $(this).val();
   });
-  var adminId = values["adminId"]
+  values["pollId"] = Math.floor((Math.random() * 10000000) + 1);
+  var adminId = values["adminId"];
+  debugger;
   socket.send('createPoll', values);
-  window.location.replace('/polls/' + id + "/" + adminId)
+  window.location.replace('/polls/' + values["pollId"] + "/" + adminId + "?id=" + values["pollId"]);
 });
 
 function formatTally(tally) {

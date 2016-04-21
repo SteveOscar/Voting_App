@@ -1,8 +1,10 @@
 // server.js
+pry = require('pryjs')
 const http = require('http');
 const express = require('express');
 const path = require('path');
 const app = express();
+const generateId = require('./lib/generate_id');
 var votes = {};
 
 app.use(express.static('public'));
@@ -20,8 +22,9 @@ app.get('/welcome', (request, response) => {
 });
 
 app.get('/polls/:id/:adminId', function(req, res){
-  console.log('IN REDIRECT!')
+  console.log("POLL ID: " + req.query.id)
   var poll = app.locals.polls[req.params.id];
+  var id = generateId();
   res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
 })
 
@@ -56,8 +59,7 @@ io.on('connection', function (socket) {
       io.sockets.emit('tally', countVotes(votes));
     }
     if (channel === 'createPoll') {
-      app.locals.polls[message["adminId"]] = message;
-
+      app.locals.polls[message["pollId"]] = message;
     }
   });
 });
