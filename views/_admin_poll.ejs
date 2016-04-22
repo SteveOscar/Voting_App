@@ -1,11 +1,18 @@
-doctype html
-html(lang="en")
-  head
-    title= CrowdSource
-    script(type='text/javascript').
-  body
-    
-    h1 Wecome Poll Admin:
-    #container.col
-      p.
-        Your poll id: #{poll.pollId}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <% include ./partials/head %>
+  </head>
+  <body>
+    <button id="test-button">test</button>
+    <h1>Wecome Poll Admin:</h1>
+    <div id="container" class="col">
+      <p>Your poll id: <%=poll.pollId%>  </p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="ejs_production.js"></script>
+    <script src="/admin.js"></script>
+  </body>
+</html>

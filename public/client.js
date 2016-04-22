@@ -14,7 +14,6 @@ submitPoll.addEventListener('click', function () {
   });
   values["pollId"] = Math.floor((Math.random() * 10000000) + 1);
   var adminId = values["adminId"];
-  debugger;
   socket.send('createPoll', values);
   window.location.replace('/polls/' + values["pollId"] + "/" + adminId + "?id=" + values["pollId"]);
 });
@@ -57,3 +56,9 @@ for (var i = 0; i < buttons.length; i++) {
     socket.send('voteCast', this.innerText);
   });
 }
+
+var test = document.getElementById('test-button');
+console.log('in script')
+test.addEventListener('click', function() {
+  console.log('Button Pressed!');
+});
