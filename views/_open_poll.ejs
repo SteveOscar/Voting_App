@@ -1,0 +1,32 @@
+doctype html
+html
+  head
+    title The Long Poll
+  |   
+  body
+    h1 Wecome Poll Admin:
+    #container.col
+      p.
+        Now Viewing Poll: #{poll.title}
+    #connection-count
+    |     
+    #status-message
+    |     
+    #choices
+      button #{poll.options1}
+      |       
+      button #{poll.options2}
+      |       
+      button #{poll.options3}
+      |       
+      button #{poll.options4}
+    |     
+    #A
+    |     
+    #B
+    |     
+    #C
+    |     
+    #D
+    |     
+    #vote-confirmation

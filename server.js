@@ -4,16 +4,16 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const app = express();
-const generateId = require('./lib/generate_id');
+// const generateId = require('./lib/generate_id');
 var votes = {};
 
-app.use(express.static('public'));
+app.use(express.static('static'));
 
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.locals.polls = {}
+
 app.get('/', (request, response) => {
   response.sendFile(path.join(__dirname, '/static/index.html'));
-  // response.render('welcome');
 });
 
 app.get('/welcome', (request, response) => {
@@ -24,9 +24,15 @@ app.get('/welcome', (request, response) => {
 app.get('/polls/:id/:adminId', function(req, res){
   console.log("POLL ID: " + req.query.id)
   var poll = app.locals.polls[req.params.id];
-  var id = generateId();
-  res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
+  // eval(pry.it)
+  res.render('_admin_poll', {poll: app.locals.polls[req.query.id], id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
 })
+
+app.get('/poll/:id', (request, response) => {
+  var poll = app.locals.polls[request.params.id];
+
+  response.render('_open_poll.ejs', { poll: poll });
+});
 
 const port = process.env.PORT || 3000;
 
