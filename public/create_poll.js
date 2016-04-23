@@ -10,5 +10,5 @@ submitPoll.addEventListener('click', function () {
   values["status"] = "open";
   var adminId = values["adminId"];
   socket.send('createPoll', values);
-  window.location.replace('/polls/' + values["pollId"] + "/" + adminId + "?id=" + values["pollId"]);
+  window.location.replace('/polls/' + values["pollId"] + "/" + adminId);
 });

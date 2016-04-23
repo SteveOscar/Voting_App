@@ -7,7 +7,7 @@
     <div class="container">
 
       <h3>Now Viewing Poll: <%=poll.title%></h3>
-      <h6>Poll Status: <%=poll.status%> </h6>
+      <h6>Poll Status: <span id="this-poll-status" data-id=<%=poll.pollId%> class="red-text"><%=poll.status%></span></h6>
       <div id="container" class="col">
         <p> Cast your vote below... </p>
       </div>
@@ -31,5 +31,6 @@
     <br> <br> <br>
     <div id="connection-count"></div>
     <% include ./partials/scripts %>
+    <script src="/open_poll.js"></script>
   </body>
 </html>

@@ -21,8 +21,7 @@ app.get('/', (request, response) => {
 app.get('/polls/:id/:adminId', function(req, res){
   console.log("POLL ID: " + req.query.id);
   var poll = app.locals.polls[req.params.id];
-  // eval(pry.it)
-  res.render('_admin_poll', {poll: app.locals.polls[req.query.id], id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
+  res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
 })
 
 app.get('/poll/:id', (request, response) => {
@@ -57,7 +56,6 @@ io.on('connection', function (socket) {
 
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
-      debugger;
       votes[socket.id] = message[0];
       socket.emit('voteReceived', message);
       io.sockets.emit('tally', countVotes(votes));
@@ -66,8 +64,8 @@ io.on('connection', function (socket) {
       app.locals.polls[message["pollId"]] = message;
     }
     if (channel === 'closePoll') {
-      app.locals.polls[message["pollId"]]["status"] = "closed";
-      io.sockets.emit('close', [message["pollId"]]);
+      app.locals.polls[message]["status"] = "closed";
+      io.sockets.emit('close', message);
     }
   });
 });

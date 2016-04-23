@@ -8,13 +8,14 @@
     <div class="container">
       <p>Poll id: <%=poll.pollId%></p>
       <a href="/poll/<%=poll.pollId%>">View poll as user: <%=poll.title%></a> <br>
-      <a href="/poll/<%=poll.adminId%>/<%=poll.pollId%>">Admin Poll Link: <%=poll.title%></a> <br>
-      <button class="close-poll">Close Poll</button>
+      <a href="/poll/<%=poll.pollId%>/<%=poll.adminId%>">Admin Poll Link: <%=poll.title%></a> <br>
+      <button data-id=<%=poll.pollId%> id="close-poll">Close Poll</button>
     </div>
     <div class="container">
       <div id="connection-count"></div>
       <div id="status-message"></div>
     </div>
     <% include ./partials/scripts %>
+    <script src="/admin.js"></script>
   </body>
 </html>
