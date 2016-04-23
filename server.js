@@ -58,7 +58,7 @@ io.on('connection', function (socket) {
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
       debugger;
-      votes[socket.id] = message;
+      votes[socket.id] = message[0];
       socket.emit('voteReceived', message);
       io.sockets.emit('tally', countVotes(votes));
     }
@@ -76,7 +76,9 @@ function countVotes(votes) {
       D: 0
   };
   for (var vote in votes) {
+    debugger
     voteCount[votes[vote]]++
+    debugger
   }
   return voteCount;
 }

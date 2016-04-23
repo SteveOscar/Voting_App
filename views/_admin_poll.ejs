@@ -7,7 +7,12 @@
     <button id="test-button">test</button>
     <h1>Wecome Poll Admin:</h1>
     <div id="container" class="col">
-      <p>Your poll id: <%=poll.pollId%>  </p>
+      <p>Your poll id: <%=poll.pollId%></p>
+      <a href="/poll/<%=poll.pollId%>">View this poll</a>
+    </div>
+    <div class="container">
+      <div id="connection-count"></div>
+      <div id="status-message"></div>
     </div>
     <% include ./partials/scripts %>
   </body>

@@ -10,17 +10,18 @@
     </div>
     <div id="connection-count"></div>
     <div id="status-message"></div>
-    <div id="choices">
-      <button class="poll-button"><%=poll.options1%></button>
-      <button class="poll-button"><%=poll.options2%></button>
-      <button class="poll-button"><%=poll.options3%></button>
-      <button class="poll-button"><%=poll.options4%></button>
-    </div>
     <div id="A"></div>
     <div id="B"></div>
     <div id="C"></div>
     <div id="D"></div>
     <div id="vote-confirmation"></div>
+    <div id="choices">
+      <button id="A" class="poll-button"><%=poll.options1%></button>
+      <button id="B" class="poll-button"><%=poll.options2%></button>
+      <button id="C" class="poll-button"><%=poll.options3%></button>
+      <button id="D" class="poll-button"><%=poll.options4%></button>
+    </div>
+
     <% include ./partials/scripts %>
   </body>
 </html>

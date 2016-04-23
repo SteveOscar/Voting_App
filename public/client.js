@@ -17,8 +17,7 @@ function formatTally(tally) {
 }
 
 socket.on('usersConnected', function (count) {
-
-  // connectionCount.innerText = 'Connected Users: ' + count;
+  connectionCount.innerText = 'Connected Users: ' + count;
 });
 
 socket.on('statusMessage', function (message) {
@@ -30,8 +29,7 @@ socket.on('voteCount', function (votes) {
 });
 
 socket.on('voteReceived', function (message) {
-
-  confirmation.innerText = 'Your vote was caste for: ' + message;
+  confirmation.innerText = 'Your vote was caste for: ' + message[1];
 });
 
 socket.on('tally', function (votes) {
