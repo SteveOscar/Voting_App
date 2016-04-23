@@ -4,24 +4,32 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1>Now Viewing Poll: <%=poll.title%></h1>
-    <div id="container" class="col">
-      <p> Cast your vote below... </p>
-    </div>
-    <div id="connection-count"></div>
-    <div id="status-message"></div>
-    <div id="A"></div>
-    <div id="B"></div>
-    <div id="C"></div>
-    <div id="D"></div>
-    <div id="vote-confirmation"></div>
-    <div id="choices">
-      <button id="A" class="poll-button"><%=poll.options1%></button>
-      <button id="B" class="poll-button"><%=poll.options2%></button>
-      <button id="C" class="poll-button"><%=poll.options3%></button>
-      <button id="D" class="poll-button"><%=poll.options4%></button>
-    </div>
+    <div class="container">
 
+      <h3>Now Viewing Poll: <%=poll.title%></h3>
+      <h6>Poll Status: <%=poll.status%> </h6>
+      <div id="container" class="col">
+        <p> Cast your vote below... </p>
+      </div>
+      <div id="status-message"></div>
+      <div id="poll-question"> <%=poll.topic%> </div>
+      <div id="results">
+        <div id="A"></div>
+        <div id="B"></div>
+        <div id="C"></div>
+        <div id="D"></div>
+      </div>
+
+      <div id="choices">
+        <span>A: </span><button id="A" class="poll-button"><%=poll.options1%></button>
+        <span>B: </span><button id="B" class="poll-button"><%=poll.options2%></button>
+        <span>C: </span><button id="C" class="poll-button"><%=poll.options3%></button>
+        <span>D: </span><button id="D" class="poll-button"><%=poll.options4%></button>
+        <div id="vote-confirmation"></div>
+      </div>
+    </div>
+    <br> <br> <br>
+    <div id="connection-count"></div>
     <% include ./partials/scripts %>
   </body>
 </html>

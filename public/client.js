@@ -29,7 +29,7 @@ socket.on('voteCount', function (votes) {
 });
 
 socket.on('voteReceived', function (message) {
-  confirmation.innerText = 'Your vote was caste for: ' + message[1];
+  confirmation.innerText = 'Your vote was cast for: ' + message[1];
 });
 
 socket.on('tally', function (votes) {

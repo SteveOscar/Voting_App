@@ -4,17 +4,19 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1 class="center">CrowdSource</h1>
-    <button id="test-button">test</button>
+    <h1 class="center">Short Poll</h1>
     <div class="container">
-      <h3 class="center">Create New Poll</h3><br>
+      <h3 class="center">Create New Short Poll</h3><br>
       <form id="form">
         <div class="container">
           <label><h5>Please enter poll name.</h5></label><br>
           <input type="text" name="title"><br><br>
 
-          <label><h5>Please choose a poll password or enter your existing password <br>if you are a returning user.</h5></label><br>
+          <label><h5>Please choose a poll password or enter your existing password if you are a returning user.</h5></label><br>
           <input type="text" name="adminId"><br><br>
+
+          <label><h5>Enter the poll question or topic:</h5></label><br>
+          <input type="text" name="topic"><br><br>
 
           <label><h5>Enter up to four options.</h5></label><br>
           <input type="text" name="options1"><br>
@@ -33,11 +35,6 @@
     <div id="connection-count"></div>
 
     <br><br><br>
-    <!-- Make sure your JS is at the bottom of the body! -->
-    <%# <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script type="text/javascript" src="ejs_production.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/client.js"></script>%>
     <% include ./partials/scripts %>
     <script src="/create_poll.js"></script>
   </body>

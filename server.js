@@ -65,6 +65,10 @@ io.on('connection', function (socket) {
     if (channel === 'createPoll') {
       app.locals.polls[message["pollId"]] = message;
     }
+    if (channel === 'closePoll') {
+      app.locals.polls[message["pollId"]]["status"] = "closed";
+      io.sockets.emit('close', [message["pollId"]]);
+    }
   });
 });
 
