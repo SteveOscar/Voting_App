@@ -4,23 +4,27 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1>Wecome Poll Admin:</h1>
+    <h1>Now Viewing Poll: <%=poll.title%></h1>
     <div id="container" class="col">
-      <p>Now Viewing Poll: <%=poll.title%> </p>
+      <p> Cast your vote below... </p>
     </div>
     <div id="connection-count"></div>
     <div id="status-message"></div>
     <div id="choices">
-      <button><%=poll.options1%></button>
-      <button><%=poll.options2%></button>
-      <button><%=poll.options3%></button>
-      <button><%=poll.options4%></button>
+      <button class="poll-button"><%=poll.options1%></button>
+      <button class="poll-button"><%=poll.options2%></button>
+      <button class="poll-button"><%=poll.options3%></button>
+      <button class="poll-button"><%=poll.options4%></button>
     </div>
     <div id="A"></div>
     <div id="B"></div>
     <div id="C"></div>
     <div id="D"></div>
     <div id="vote-confirmation"></div>
-    <% include ./partials/scripts %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="ejs_production.js"></script>
+    <script src="/open_poll.js"></script>
   </body>
 </html>

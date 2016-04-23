@@ -80,6 +80,4 @@ function countVotes(votes) {
   return voteCount;
 }
 
-
-
 module.exports = server;

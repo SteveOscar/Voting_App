@@ -56,9 +56,3 @@ for (var i = 0; i < buttons.length; i++) {
     socket.send('voteCast', this.innerText);
   });
 }
-
-var test = document.getElementById('test-button');
-console.log('in script')
-test.addEventListener('click', function() {
-  console.log('Button Pressed!');
-});
