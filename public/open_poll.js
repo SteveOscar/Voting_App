@@ -12,8 +12,8 @@ for (var i = 0; i < buttons.length; i++) {
 }
 
 socket.on('close', function (pollId) {
-  if (thisPoll.dataset.id === pollId) {
-    thisPoll.innerText = 'closed';
+  if (thisPoll.dataset.id === pollId.toString()) {
+    thisPoll.innerText = 'Closed';
     for (var i = 0; i < buttons.length; i++) {buttons[i].className += " disabled";};
   }
 });

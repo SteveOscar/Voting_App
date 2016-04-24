@@ -7,6 +7,7 @@
       <div class="container">
         <h1>Wecome Poll Admin:</h1>
         <h3>Viewing Poll: <%=poll.title%></h3>
+        <h6>Poll Status: <span id="this-poll-status" data-id=<%=poll.pollId%> class="red-text"><%=poll.status%></span></h6>
         <a href="/poll/<%=poll.pollId%>">View poll as user: <%=poll.title%></a> <br>
         <a href="/poll/<%=poll.pollId%>/<%=poll.adminId%>">Admin Poll Link: <%=poll.title%></a> <br>
         <button data-id=<%=poll.pollId%> id="close-poll">Close Poll</button>

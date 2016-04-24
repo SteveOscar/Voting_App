@@ -4,6 +4,7 @@ const http = require('http');
 const express = require('express');
 const path = require('path');
 const app = express();
+const beginTimer = require('./lib/timer');
 // const generateId = require('./lib/generate_id');
 var votes = {};
 
@@ -61,6 +62,8 @@ io.on('connection', function (socket) {
       io.sockets.emit('tally', countVotes(votes));
     }
     if (channel === 'createPoll') {
+      var timeSpan = message["timer"] * 10
+      beginTimer(timeSpan, message["pollId"], io, app);
       app.locals.polls[message["pollId"]] = message;
     }
     if (channel === 'closePoll') {
