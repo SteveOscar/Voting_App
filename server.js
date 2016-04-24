@@ -5,19 +5,15 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const beginTimer = require('./lib/timer');
-// const generateId = require('./lib/generate_id');
 var votes = {};
 
 app.use(express.static('public'));
-
 app.set('view engine', 'ejs');
 app.locals.polls = {};
 
 app.get('/', (request, response) => {
-  // response.sendFile(path.join(__dirname, '/static/index.html'));
   response.render('index');
 });
-
 
 app.get('/polls/:id/:adminId', function(req, res){
   console.log("POLL ID: " + req.query.id);
@@ -27,12 +23,10 @@ app.get('/polls/:id/:adminId', function(req, res){
 
 app.get('/poll/:id', (request, response) => {
   var poll = app.locals.polls[request.params.id];
-
   response.render('_open_poll.ejs', { poll: poll });
 });
 
 const port = process.env.PORT || 3000;
-
 const server = http.createServer(app)
                  .listen(port, function () {
                     console.log('Listening on port ' + port + '.');
@@ -62,7 +56,7 @@ io.on('connection', function (socket) {
       io.sockets.emit('tally', countVotes(votes));
     }
     if (channel === 'createPoll') {
-      var timeSpan = message["timer"] * 10
+      var timeSpan = message["timer"] * 60
       beginTimer(timeSpan, message["pollId"], io, app);
       app.locals.polls[message["pollId"]] = message;
     }
@@ -81,9 +75,7 @@ function countVotes(votes) {
       D: 0
   };
   for (var vote in votes) {
-    debugger
     voteCount[votes[vote]]++
-    debugger
   }
   return voteCount;
 }
