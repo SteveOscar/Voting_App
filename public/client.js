@@ -1,11 +1,8 @@
 var socket = io();
-// var $ = require('jQuery');
 var connectionCount = document.getElementById('connection-count');
 var statusMessage = document.getElementById('status-message');
 var confirmation = document.getElementById('vote-confirmation');
 var form = document.getElementById('form');
-
-
 
 function formatTally(tally) {
   for (var vote in tally) {
@@ -37,10 +34,8 @@ socket.on('tally', function (votes) {
 });
 
 var buttons = document.querySelectorAll('#choices button');
-
 for (var i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('click', function () {
-    console.log('Voted for ' + this.innerText)
     socket.send('voteCast', this.innerText);
   });
 }

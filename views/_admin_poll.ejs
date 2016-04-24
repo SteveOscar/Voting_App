@@ -4,16 +4,23 @@
     <% include ./partials/head %>
   </head>
   <body>
-    <h1>Wecome Poll Admin:</h1>
-    <div class="container">
-      <p>Poll id: <%=poll.pollId%></p>
-      <a href="/poll/<%=poll.pollId%>">View poll as user: <%=poll.title%></a> <br>
-      <a href="/poll/<%=poll.pollId%>/<%=poll.adminId%>">Admin Poll Link: <%=poll.title%></a> <br>
-      <button data-id=<%=poll.pollId%> id="close-poll">Close Poll</button>
-    </div>
-    <div class="container">
-      <div id="connection-count"></div>
-      <div id="status-message"></div>
+      <div class="container">
+        <h1>Wecome Poll Admin:</h1>
+        <h3>Viewing Poll: <%=poll.title%></h3>
+        <a href="/poll/<%=poll.pollId%>">View poll as user: <%=poll.title%></a> <br>
+        <a href="/poll/<%=poll.pollId%>/<%=poll.adminId%>">Admin Poll Link: <%=poll.title%></a> <br>
+        <button data-id=<%=poll.pollId%> id="close-poll">Close Poll</button>
+
+      <div class="container">
+        <div id="connection-count"></div>
+        <div id="status-message"></div>
+      </div>
+      <div id="results">
+        <div id="A"></div>
+        <div id="B"></div>
+        <div id="C"></div>
+        <div id="D"></div>
+      </div>
     </div>
     <% include ./partials/scripts %>
     <script src="/admin.js"></script>
