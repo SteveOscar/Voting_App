@@ -1,25 +1,26 @@
 const assert = require('assert');
 const app = require('../server');
 const request = require('request');
+const fixtures = require('./fixtures');
+pry = require('pryjs');
 
-before((done) => {
-  this.port = 3000;
-
-  this.server = app.listen(this.port, (err, result) => {
-    if (err) { return done(err); }
-    done();
-  });
-
-  this.request = request.defaults({
-    baseUrl: 'http://localhost:3000/'
-  });
-});
-
-after(() => {
-  this.server.close();
-});
 
 describe('Server', () => {
+
+  before((done) => {
+    this.port = 3000;
+    this.server = app.listen(this.port, (err, result) => {
+      if (err) { return done(err); }
+      done();
+    });
+    this.request = request.defaults({
+      baseUrl: 'http://localhost:3000/'
+    });
+  });
+
+  after(() => {
+    this.server.close();
+  });
 
   it('should exist', () => {
     assert(app);
@@ -33,17 +34,38 @@ describe('Server', () => {
         done();
       });
     });
+  });
 
-    // it('should have a body with the name of the application', (done) => {
-    //   var title = app.locals.title;
-    //
-    //   this.request.get('/', (error, response) => {
-    //     if (error) { done(error); }
-    //     assert(response.body.includes(title),
-    //            `"${response.body}" does not include "${title}".`);
-    //     done();
-    //   });
-    // });
+  describe('GET /poll/:id', () => {
+
+    beforeEach(function() {
+      app.locals.polls = {}
+      app.locals.polls[449635] = fixtures.validPoll;
+    });
+
+    it('should not return a 404', (done) => {
+      this.request.get('/poll/449635', (error, response) => {
+        if (error) { done(error); }
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+  });
+
+  describe('GET /poll/449635/carl', () => {
+
+    beforeEach(function() {
+      app.locals.polls = {}
+      app.locals.polls[449635] = fixtures.validPoll;
+    });
+
+    it('should not return a 404', (done) => {
+      this.request.get('/poll/449635', (error, response) => {
+        if (error) { done(error); }
+        assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
   });
 
 });
