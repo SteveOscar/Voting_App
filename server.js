@@ -17,12 +17,16 @@ app.get('/', (request, response) => {
 
 app.get('/polls/:id/:adminId', function(req, res){
   var poll = app.locals.polls[req.params.id];
-  res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
-})
+  if (req.params.adminId === poll.adminId) {
+    res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
+  } else {res.status(404).send('Not found');}
+});
 
 app.get('/poll/:id', (request, response) => {
   var poll = app.locals.polls[request.params.id];
+  if (poll !== undefined) {
   response.render('_open_poll.ejs', { poll: poll });
+} else {response.status(404).send('Not found');}
 });
 
 const port = process.env.PORT || 3000;

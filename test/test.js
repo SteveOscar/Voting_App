@@ -51,6 +51,14 @@ describe('Server', () => {
       });
     });
 
+    it('should return a 404 for invalid poll ID', (done) => {
+      this.request.get('/poll/449625', (error, response) => {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 404);
+        done();
+      });
+    });
+
     it('should return a page that has the title of the poll', (done) => {
       var poll = app.locals.polls[449635];
 
@@ -109,6 +117,14 @@ describe('Server', () => {
       this.request.get('/polls/449635/carl', (error, response) => {
         if (error) { done(error); }
         assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should return a 404 if wrong admin code', (done) => {
+      this.request.get('/polls/449635/barl', (error, response) => {
+        if (error) { done(error); }
+        assert.equal(response.statusCode, 404);
         done();
       });
     });
