@@ -36,7 +36,7 @@ describe('Server', () => {
     });
   });
 
-  describe('GET /poll/:id', () => {
+  describe('View Poll as User', () => {
 
     beforeEach(function() {
       app.locals.polls = {}
@@ -50,9 +50,55 @@ describe('Server', () => {
         done();
       });
     });
+
+    it('should return a page that has the title of the poll', (done) => {
+      var poll = app.locals.polls[449635];
+
+      this.request.get('/poll/449635', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.title), `"${response.body}" does not include "${poll.title}"`);
+        done();
+      });
+    });
+
+    it('should return a page that has the poll options', (done) => {
+      var poll = app.locals.polls[449635];
+
+      this.request.get('/poll/449635', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes(poll.options1),
+               `"${response.body}" does not include "${poll.options1}".`);
+         assert(response.body.includes(poll.options2),
+                `"${response.body}" does not include "${poll.options2}".`);
+        done();
+      });
+    });
+
+    it('the poll should be open', (done) => {
+      var poll = app.locals.polls[449635];
+
+      this.request.get('/poll/449635', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes('open'),
+               `"${response.body}" does not include "open".`);
+        done();
+      });
+    });
+
+    it('should show closed message if poll is closed', (done) => {
+      var poll = app.locals.polls[449635];
+      poll['status'] = 'Closed';
+
+      this.request.get('/poll/449635', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes('open'),
+               `"${response.body}" does not include "Closed".`);
+        done();
+      });
+    });
   });
 
-  describe('GET /poll/449635/carl', () => {
+  describe('View Poll as Admin', () => {
 
     beforeEach(function() {
       app.locals.polls = {}
@@ -60,9 +106,42 @@ describe('Server', () => {
     });
 
     it('should not return a 404', (done) => {
-      this.request.get('/poll/449635', (error, response) => {
+      this.request.get('/polls/449635/carl', (error, response) => {
         if (error) { done(error); }
         assert.notEqual(response.statusCode, 404);
+        done();
+      });
+    });
+
+    it('should return a page that has the title of the poll', (done) => {
+      var poll = app.locals.polls[449635];
+
+      this.request.get('/polls/449635/carl', (error, response) => {
+        if (error) { done(error); }
+        assert(response.body.includes(poll.title), `"${response.body}" does not include "${poll.title}"`);
+        done();
+      });
+    });
+
+    it('the poll should be open', (done) => {
+      var poll = app.locals.polls[449635];
+      poll['status'] = 'open';
+
+      this.request.get('/polls/449635/carl', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes('open'),
+               `"${response.body}" does not include "open".`);
+        done();
+      });
+    });
+
+    it('should show closed message if poll is closed', (done) => {
+      var poll = app.locals.polls[449635];
+
+      this.request.get('/polls/449635/carl', (error, response) => {
+        if(error) { done(error); }
+        assert(response.body.includes('open'),
+               `"${response.body}" does not include "Closed".`);
         done();
       });
     });
