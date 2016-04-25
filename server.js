@@ -16,36 +16,33 @@ app.get('/', (request, response) => {
 });
 
 app.get('/polls/:id/:adminId', function(req, res){
-  console.log("POLL ID: " + req.query.id);
   var poll = app.locals.polls[req.params.id];
-  res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
-})
+  if (req.params.adminId === poll.adminId) {
+    res.render('_admin_poll', {poll: poll, id: req.params.id, adminID: req.params.adminId, votes: countVotes(poll)});
+  } else {res.status(404).send('Not found');}
+});
 
 app.get('/poll/:id', (request, response) => {
   var poll = app.locals.polls[request.params.id];
+  if (poll !== undefined) {
   response.render('_open_poll.ejs', { poll: poll });
+} else {response.status(404).send('Not found');}
 });
 
 const port = process.env.PORT || 3000;
 const server = http.createServer(app)
-                 .listen(port, function () {
-                    console.log('Listening on port ' + port + '.');
-                  });
+                //  .listen(port, function () {
+                //     console.log('Listening on port ' + port + '.');
+                //   });
 
 const socketIo = require('socket.io');
 const io = socketIo(server);
 
 io.on('connection', function (socket) {
-  console.log('A user has connected.', io.engine.clientsCount);
-
   io.sockets.emit('usersConnected', io.engine.clientsCount);
-
   socket.emit('statusMessage', 'You have connected.');
-
   socket.on('disconnect', function () {
-    console.log('A user has disconnected.', io.engine.clientsCount);
     delete votes[socket.id];
-    console.log(votes);
     io.sockets.emit('usersConnected', io.engine.clientsCount);
   });
 
@@ -56,8 +53,11 @@ io.on('connection', function (socket) {
       io.sockets.emit('tally', countVotes(votes));
     }
     if (channel === 'createPoll') {
-      var timeSpan = message["timer"] * 60
-      beginTimer(timeSpan, message["pollId"], io, app);
+      if (message["timer"] !== 'N/A') {
+        var timeSpan = message["timer"] * 60
+        beginTimer(timeSpan, message["pollId"], io, app);
+      }
+      console.log(message)
       app.locals.polls[message["pollId"]] = message;
     }
     if (channel === 'closePoll') {
@@ -80,4 +80,10 @@ function countVotes(votes) {
   return voteCount;
 }
 
-module.exports = server;
+if (!module.parent){
+  server.listen(port, function () {
+    console.log('Listening on port ' + port + '.');
+  });
+}
+
+module.exports = app;
